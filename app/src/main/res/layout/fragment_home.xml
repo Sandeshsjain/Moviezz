@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.HomeFragment">
+
+    <include
+        android:id="@+id/top_tollbar"
+        layout="@layout/top_toll_bar">
+    </include>
+
+    <ScrollView
+        android:layout_below="@+id/top_tollbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:background="#05010C"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="6dp"
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.smarteist.autoimageslider.SliderView
+                android:id="@+id/imageSlider"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:sliderAnimationDuration="500"
+                app:sliderAutoCycleDirection="back_and_forth"
+                app:sliderAutoCycleEnabled="true"
+                app:sliderScrollTimeInSec="1"
+                app:sliderStartAutoCycle="true" />
+
+        </androidx.cardview.widget.CardView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/trending_personhd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textSize="18dp"
+                android:text="Trending">
+
+            </TextView>
+            <TextView
+                android:layout_alignParentBottom="true"
+                android:id="@+id/trending_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Person"
+                android:layout_toRightOf="@id/trending_personhd"
+                android:textColor="#807B7B">
+
+            </TextView>
+            <TextView
+                android:id="@+id/trending_personmore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#DA2828"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_alignParentRight="true"
+                android:text="More">
+
+            </TextView>
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:id="@+id/recycler_view_trending_person">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/trending_tvshowhd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textSize="18dp"
+                android:text="Trending">
+
+            </TextView>
+            <TextView
+                android:layout_alignParentBottom="true"
+                android:id="@+id/trending_tvshow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Movies"
+                android:layout_toRightOf="@id/trending_tvshowhd"
+                android:textColor="#807B7B">
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#DA2828"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_alignParentRight="true"
+                android:text="More">
+
+            </TextView>
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:id="@+id/recycler_view_trending_moviee">
+
+        </androidx.recyclerview.widget.RecyclerView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/trending_moviehd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textSize="18dp"
+                android:text="Trending">
+
+            </TextView>
+            <TextView
+                android:layout_alignParentBottom="true"
+                android:id="@+id/trending_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tv Show"
+                android:layout_toRightOf="@id/trending_moviehd"
+                android:textColor="#807B7B">
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#DA2828"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_alignParentRight="true"
+                android:text="More">
+
+            </TextView>
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:id="@+id/recycler_view_trending_tvshow">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/popular_moviewhd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textSize="18dp"
+                android:text="Popular">
+
+            </TextView>
+            <TextView
+                android:layout_alignParentBottom="true"
+                android:id="@+id/popular_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Movies"
+                android:layout_toRightOf="@id/popular_moviewhd"
+                android:textColor="#807B7B">
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#DA2828"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_alignParentRight="true"
+                android:text="More">
+
+            </TextView>
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:id="@+id/recycler_view_popular_movie">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/popular_tvshowhd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textSize="18dp"
+                android:text="Popular">
+
+            </TextView>
+            <TextView
+                android:layout_alignParentBottom="true"
+                android:id="@+id/popular_tvshow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tv show"
+                android:layout_toRightOf="@id/popular_tvshowhd"
+                android:textColor="#807B7B">
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#DA2828"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_alignParentRight="true"
+                android:text="More">
+
+            </TextView>
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:id="@+id/recycler_view_popular_tvshow">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/toprated_moviehd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textSize="18dp"
+                android:text="TopRated">
+
+            </TextView>
+            <TextView
+                android:layout_alignParentBottom="true"
+                android:id="@+id/toprated_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Movies"
+                android:layout_toRightOf="@id/toprated_moviehd"
+                android:textColor="#807B7B">
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#DA2828"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_alignParentRight="true"
+                android:text="More">
+
+            </TextView>
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:id="@+id/recycler_view_top_rated_movie">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/toprated_tvshowhd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textSize="18dp"
+                android:text="TopRated">
+
+            </TextView>
+            <TextView
+                android:layout_alignParentBottom="true"
+                android:id="@+id/toprated_tvshow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tv show"
+                android:layout_toRightOf="@id/toprated_tvshowhd"
+                android:textColor="#807B7B">
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#DA2828"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_alignParentRight="true"
+                android:text="More">
+
+            </TextView>
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:id="@+id/recycler_view_toprated_tvshow">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
