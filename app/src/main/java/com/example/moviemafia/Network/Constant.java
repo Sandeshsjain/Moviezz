@@ -6,6 +6,6 @@ public class Constant{
     public static final String Image_URL="https://image.tmdb.org/t/p/w500";//medium
     public static final String Image_Org="https://image.tmdb.org/t/p/original";//big
     public  static final String key = "c4824776bf6f08433a4c4e7cd75a6acc";
-    public static String trendingPerson = BASE_URL+"trending/";
+    public static String trending = BASE_URL+"trending/";
 
 }

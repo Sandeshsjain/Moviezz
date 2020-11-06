@@ -21,7 +21,6 @@ import java.util.List;
 public class TrendingPersonAdapter extends RecyclerView.Adapter<TrendingPersonAdapter.TrendingPersonViewHolder>{
     Context context;
     List<TrendingPersonBean> trendingPersonBeanList;
-
     public TrendingPersonAdapter(Context context, List<TrendingPersonBean> trendingPersonBeanList) {
         this.context = context;
         this.trendingPersonBeanList = trendingPersonBeanList;
@@ -39,7 +38,7 @@ public class TrendingPersonAdapter extends RecyclerView.Adapter<TrendingPersonAd
         Glide.with(context).load(Constant.Image_Org+trendingPersonBeanList.get(position).getProfile_path()).placeholder(R.drawable.ic_baseline_person_pin_24).into(holder.circular_image_view);
         String first_name = trendingPersonBeanList.get(position).getName().split(" ")[0];
         Log.d("Adapter", "onBindViewHolder: "+first_name);
-        holder.name_textview.setText(first_name);
+        holder.name_textview.setText(first_name+"...");
     }
 
     @Override

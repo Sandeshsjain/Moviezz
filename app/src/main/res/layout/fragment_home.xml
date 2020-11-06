@@ -133,7 +133,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:id="@+id/recycler_view_trending_moviee">
+            android:id="@+id/recycler_view_trending_movie">
 
         </androidx.recyclerview.widget.RecyclerView>
         <RelativeLayout

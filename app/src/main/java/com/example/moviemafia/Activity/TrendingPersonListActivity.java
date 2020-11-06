@@ -1,5 +1,6 @@
 package com.example.moviemafia.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,23 +48,22 @@ public class TrendingPersonListActivity extends AppCompatActivity {
         recylerViewTrendingPersonList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         trendingPersonListAdpater = new TrendingPersonListAdpater(this,trendingPersonBeanList);
         recylerViewTrendingPersonList.setAdapter(trendingPersonListAdpater);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            recylerViewTrendingPersonList.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+
+            recylerViewTrendingPersonList.setOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
-                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                    if (isLastItemDisplaying(recylerViewTrendingPersonList)) {
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    if(!isLastItemDisplaying(recylerViewTrendingPersonList)){
                         count++;
                         Log.d("helllo", "onScrolled: " + count);
                         getData(count);
-                        trendingPersonListAdpater.notifyDataSetChanged();
                     }
+                    super.onScrolled(recyclerView, dx, dy);
                 }
             });
-        }
     }
     private void getData(int pageCount) {
-        Log.d("MyApplication", "getData: ");
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.trendingPerson+"person/day?page="+pageCount+"&api_key="+Constant.key, new Response.Listener<String>() {
+        Log.d("MyApplication", "getData:");
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.trending+"person/week?page="+pageCount+"&api_key="+Constant.key, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 JSONObject rootObject;

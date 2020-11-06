@@ -14,7 +14,7 @@
         android:textStyle="bold"
         android:textSize="18dp"
         android:layout_margin="8dp"
-        android:text="Movie Stack">
+        android:text="MovieZZ">
 
     </TextView>
 

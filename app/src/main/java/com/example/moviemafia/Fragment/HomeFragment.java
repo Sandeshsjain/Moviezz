@@ -23,9 +23,13 @@ import com.android.volley.toolbox.Volley;
 import com.example.moviemafia.Activity.HomeActivity;
 import com.example.moviemafia.Activity.MainActivity;
 import com.example.moviemafia.Activity.TrendingPersonListActivity;
+import com.example.moviemafia.Adapter.MovieAndShowAdapter;
 import com.example.moviemafia.Adapter.TrendingPersonAdapter;
+import com.example.moviemafia.Adapter.TrendingShowAdapter;
+import com.example.moviemafia.Bean.TrendingMovieBean;
 import com.example.moviemafia.Bean.TrendingPersonBean;
 import com.example.moviemafia.Bean.TrendingPersonKnowForBean;
+import com.example.moviemafia.Bean.TrendingShowBean;
 import com.example.moviemafia.Network.Constant;
 import com.example.moviemafia.R;
 
@@ -39,10 +43,23 @@ import java.util.List;
 import java.util.Map;
 
 public class HomeFragment extends Fragment {
+    //all list
     List<TrendingPersonBean> trendingPersonList;
+    List<TrendingMovieBean> trendingMovieBeanList;
+    List<TrendingShowBean> trendingShowBeanList;
+    //request queue
     RequestQueue requestQueue;
+
+    //recyclerView
     RecyclerView recycler_view_trending_person;
+    RecyclerView recycler_view_trending_movie;
+    RecyclerView recycler_view_trending_tvshow;
+
+    //adapter
     TrendingPersonAdapter trendingPersonAdapter;
+    MovieAndShowAdapter movieAndShowAdapter;
+    TrendingShowAdapter trendingShowAdapter;
+    //textView
     TextView trending_personmore;
     public static final String TAG = "HomeFragment";
     public HomeFragment() {
@@ -53,14 +70,34 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
-        trendingPersonList = new ArrayList<>();
         trending_personmore = view.findViewById(R.id.trending_personmore);
+
+        trendingPersonList = new ArrayList<>();
+        trendingMovieBeanList = new ArrayList<>();
+        trendingShowBeanList = new ArrayList<>();
+
         requestQueue = Volley.newRequestQueue(getContext());
-        getTrendingPerson();
+
         recycler_view_trending_person = view.findViewById(R.id.recycler_view_trending_person);
+        recycler_view_trending_movie = view.findViewById(R.id.recycler_view_trending_movie);
+        recycler_view_trending_tvshow = view.findViewById(R.id.recycler_view_trending_tvshow);
+
+        recycler_view_trending_tvshow.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+        recycler_view_trending_movie.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         recycler_view_trending_person.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        getTrendingPerson();
+        getTrendingMovie();
+        getTrendingShow();
+
         trendingPersonAdapter = new TrendingPersonAdapter(getContext(),trendingPersonList);
+        movieAndShowAdapter = new MovieAndShowAdapter(getContext(),trendingMovieBeanList);
+        trendingShowAdapter = new TrendingShowAdapter(getContext(),trendingShowBeanList);
+
+        recycler_view_trending_movie.setAdapter(movieAndShowAdapter);
         recycler_view_trending_person.setAdapter(trendingPersonAdapter);
+        recycler_view_trending_tvshow.setAdapter(trendingShowAdapter);
+
         trending_personmore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,8 +107,100 @@ public class HomeFragment extends Fragment {
         });
         return view;
     }
+
+    private void getTrendingShow() {
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.trending + "tv/week?api_key=" + Constant.key, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray mainArray = jsonObject.getJSONArray("results");
+                    Log.d(TAG, "TrendingShowwee: "+mainArray);
+                    for(int i = 0;i<mainArray.length();i++){
+                        JSONObject data = mainArray.getJSONObject(i);
+                        TrendingShowBean bean = new TrendingShowBean();
+                        bean.setId(data.getString("id"));
+                        bean.setBackdrop_path(data.getString("backdrop_path"));
+                        bean.setName(data.getString("name"));
+                        bean.setOriginal_name(data.getString("original_name"));
+                        bean.setFirst_air_date(data.getString("first_air_date"));
+                        bean.setMedia_type(data.getString("media_type"));
+                        bean.setPopularity(data.getString("popularity"));
+                        bean.setOriginal_language(data.getString("original_language"));
+                        bean.setOverview(data.getString("overview"));
+                        bean.setOriginal_language(data.getString("original_language"));
+                        bean.setPoster_path(data.getString("poster_path"));
+                        bean.setVote_average(data.getString("vote_average"));
+                        bean.setVote_count(data.getString("vote_count"));
+
+                        trendingShowBeanList.add(bean);
+                    }
+                    trendingShowAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponseShow: "+error);
+            }
+        });
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(request);
+    }
+
+    private void getTrendingMovie() {
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.trending + "movie/week?api_key=" + Constant.key, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject rootObject = new JSONObject(response);
+                    JSONArray mainArray = rootObject.getJSONArray("results");
+                    Log.d(TAG, "TrendingMoviewee: "+mainArray);
+                    for(int i = 0;i<mainArray.length();i++){
+                        JSONObject data = mainArray.getJSONObject(i);
+                        TrendingMovieBean bean = new TrendingMovieBean();
+                        bean.setAdult(data.getString("adult"));
+                        bean.setBackdrop_path(data.getString("backdrop_path"));
+                        bean.setId(data.getString("id"));
+                        bean.setMedia_type(data.getString("media_type"));
+                        bean.setOriginal_language(data.getString("original_language"));
+                        bean.setOriginal_title(data.getString("original_title"));
+                        bean.setTitle(data.getString("title"));
+                        bean.setOverview(data.getString("overview"));
+                        bean.setPopularity(data.getString("popularity"));
+                        bean.setPoster_path(data.getString("poster_path"));
+                        bean.setVideo(data.getString("video"));
+                        bean.setRelease_date(data.getString("release_date"));
+                        bean.setVote_average(data.getString("vote_average"));
+                        bean.setVote_count(data.getString("vote_count"));
+                        trendingMovieBeanList.add(bean);
+                    }
+                    trendingPersonAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: "+error);
+            }
+        });
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(request);
+    }
+
     private void getTrendingPerson() {
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.trendingPerson+"person/day?api_key="+Constant.key, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.trending+"person/week?api_key="+Constant.key, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 JSONObject rootObject;
@@ -116,7 +245,6 @@ public class HomeFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
