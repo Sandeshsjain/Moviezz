@@ -15,11 +15,8 @@
         android:layout_below="@+id/top_tollbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
-
     <LinearLayout
-        android:background="#05010C"
+        android:background="@color/primary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -28,7 +25,7 @@
             app:cardCornerRadius="6dp"
             android:layout_margin="15dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="200dp">
 
             <com.smarteist.autoimageslider.SliderView
                 android:id="@+id/imageSlider"
@@ -50,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textColor="#fff"
+                android:textColor="@color/white"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:textSize="18dp"
@@ -98,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textColor="#fff"
+                android:textColor="@color/white"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:textSize="18dp"
@@ -116,6 +113,7 @@
 
             </TextView>
             <TextView
+                android:id="@+id/trendingmoviemore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#DA2828"
@@ -162,6 +160,7 @@
 
             </TextView>
             <TextView
+                android:id="@+id/trendingtvshowmore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#DA2828"

@@ -22,7 +22,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.moviemafia.Activity.HomeActivity;
 import com.example.moviemafia.Activity.MainActivity;
+import com.example.moviemafia.Activity.TrendingMovieListActivity;
 import com.example.moviemafia.Activity.TrendingPersonListActivity;
+import com.example.moviemafia.Activity.TrendingShowListActivity;
+import com.example.moviemafia.Adapter.ImageSliderAdapter;
 import com.example.moviemafia.Adapter.MovieAndShowAdapter;
 import com.example.moviemafia.Adapter.TrendingPersonAdapter;
 import com.example.moviemafia.Adapter.TrendingShowAdapter;
@@ -32,6 +35,8 @@ import com.example.moviemafia.Bean.TrendingPersonKnowForBean;
 import com.example.moviemafia.Bean.TrendingShowBean;
 import com.example.moviemafia.Network.Constant;
 import com.example.moviemafia.R;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,13 +59,16 @@ public class HomeFragment extends Fragment {
     RecyclerView recycler_view_trending_person;
     RecyclerView recycler_view_trending_movie;
     RecyclerView recycler_view_trending_tvshow;
+    SliderView sliderView;
 
     //adapter
     TrendingPersonAdapter trendingPersonAdapter;
     MovieAndShowAdapter movieAndShowAdapter;
     TrendingShowAdapter trendingShowAdapter;
+    ImageSliderAdapter imageSliderAdapter;
     //textView
-    TextView trending_personmore;
+    TextView trending_personmore,trendingmoviemore,trendingtvshowmore;
+
     public static final String TAG = "HomeFragment";
     public HomeFragment() {
         //Required empty public constructor
@@ -70,7 +78,11 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
+
+        //more button
         trending_personmore = view.findViewById(R.id.trending_personmore);
+        trendingmoviemore = view.findViewById(R.id.trendingmoviemore);
+        trendingtvshowmore = view.findViewById(R.id.trendingtvshowmore);
 
         trendingPersonList = new ArrayList<>();
         trendingMovieBeanList = new ArrayList<>();
@@ -81,6 +93,7 @@ public class HomeFragment extends Fragment {
         recycler_view_trending_person = view.findViewById(R.id.recycler_view_trending_person);
         recycler_view_trending_movie = view.findViewById(R.id.recycler_view_trending_movie);
         recycler_view_trending_tvshow = view.findViewById(R.id.recycler_view_trending_tvshow);
+        sliderView = view.findViewById(R.id.imageSlider);
 
         recycler_view_trending_tvshow.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         recycler_view_trending_movie.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
@@ -93,10 +106,17 @@ public class HomeFragment extends Fragment {
         trendingPersonAdapter = new TrendingPersonAdapter(getContext(),trendingPersonList);
         movieAndShowAdapter = new MovieAndShowAdapter(getContext(),trendingMovieBeanList);
         trendingShowAdapter = new TrendingShowAdapter(getContext(),trendingShowBeanList);
+        imageSliderAdapter = new ImageSliderAdapter(getContext(),trendingMovieBeanList);
 
         recycler_view_trending_movie.setAdapter(movieAndShowAdapter);
         recycler_view_trending_person.setAdapter(trendingPersonAdapter);
         recycler_view_trending_tvshow.setAdapter(trendingShowAdapter);
+        sliderView.setSliderAdapter(imageSliderAdapter);
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+        sliderView.setScrollTimeInSec(4); //
+        // set scroll delay in seconds :
+        sliderView.startAutoCycle();
 
         trending_personmore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +125,22 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        trendingmoviemore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), TrendingMovieListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        trendingtvshowmore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), TrendingShowListActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
@@ -181,10 +217,10 @@ public class HomeFragment extends Fragment {
                         trendingMovieBeanList.add(bean);
                     }
                     trendingPersonAdapter.notifyDataSetChanged();
+                    imageSliderAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -232,7 +268,7 @@ public class HomeFragment extends Fragment {
                             trendingPersonKnowForBean.setOriginal_title(knownForObject.getString("adult"));
                             trendingPersonKnowForBean.setOverview(knownForObject.getString("overview"));
                             trendingPersonKnowForBean.setPoster_path(knownForObject.getString("poster_path"));
-                            trendingPersonKnowForBean.setRelease_date(knownForObject.getString("release_date"));
+                            trendingPersonKnowForBean.setRelease_date(knownForObject.getString(                                                                                                                                                                                                                                                                                                                                                                                            "release_date"));
                             trendingPersonKnowForBean.setTitle(knownForObject.getString("title"));
                             trendingPersonKnowForBean.setVote_average(knownForObject.getString("vote_average"));
                             trendingPersonKnowForBean.setVote_count(knownForObject.getString("vote_count"));

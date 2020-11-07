@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieMafia">
-        <activity android:name=".Activity.TrendingPersonListActivity"></activity>
+        <activity android:name=".Activity.TrendingShowListActivity"></activity>
+        <activity android:name=".Activity.TrendingMovieListActivity" />
+        <activity android:name=".Activity.TrendingPersonListActivity" />
         <activity android:name=".Activity.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.MainActivity"></activity>
+        <activity android:name=".Activity.MainActivity" />
     </application>
 
 </manifest>

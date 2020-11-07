@@ -2,6 +2,7 @@ package com.example.moviemafia.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +23,7 @@ import com.example.moviemafia.Bean.TrendingPersonBean;
 import com.example.moviemafia.Bean.TrendingPersonKnowForBean;
 import com.example.moviemafia.Fragment.HomeFragment;
 import com.example.moviemafia.Network.Constant;
+import com.example.moviemafia.Network.Myutlis;
 import com.example.moviemafia.R;
 
 import org.json.JSONArray;
@@ -45,19 +47,20 @@ public class TrendingPersonListActivity extends AppCompatActivity {
         trendingPersonBeanList = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(this);
         getData(count);
-        recylerViewTrendingPersonList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recylerViewTrendingPersonList.setLayoutManager(linearLayoutManager);
         trendingPersonListAdpater = new TrendingPersonListAdpater(this,trendingPersonBeanList);
         recylerViewTrendingPersonList.setAdapter(trendingPersonListAdpater);
 
-            recylerViewTrendingPersonList.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            recylerViewTrendingPersonList.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
-                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                    if(!isLastItemDisplaying(recylerViewTrendingPersonList)){
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                    if(!(Myutlis.isLastItemDisplaying(recylerViewTrendingPersonList))){
                         count++;
                         Log.d("helllo", "onScrolled: " + count);
                         getData(count);
                     }
-                    super.onScrolled(recyclerView, dx, dy);
+                    super.onScrollStateChanged(recyclerView, newState);
                 }
             });
     }
@@ -122,11 +125,5 @@ public class TrendingPersonListActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(request);
     }
-    public static boolean isLastItemDisplaying(RecyclerView recyclerView) {
-        if (recyclerView.getAdapter().getItemCount() != 0) {
-            int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
-            return lastVisibleItemPosition != RecyclerView.NO_POSITION && lastVisibleItemPosition == recyclerView.getAdapter().getItemCount() - 1;
-        }
-        return false;
-    }
+
 }

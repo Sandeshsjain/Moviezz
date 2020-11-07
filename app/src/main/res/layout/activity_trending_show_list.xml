@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/primary"
-    tools:context=".Activity.TrendingMovieListActivity">
-
+    android:orientation="vertical"
+    tools:context=".Activity.TrendingShowListActivity">
     <RelativeLayout
         android:background="@color/black"
         android:layout_width="match_parent"
@@ -25,10 +24,11 @@
     </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_margin="8dp"
-        android:id="@+id/recyclerViewTrendingMovieList"
+        android:id="@+id/recyclertrendingshowlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </androidx.recyclerview.widget.RecyclerView>
+
 
 </LinearLayout>
