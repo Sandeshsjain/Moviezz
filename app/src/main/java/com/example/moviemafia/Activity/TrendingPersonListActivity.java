@@ -51,7 +51,6 @@ public class TrendingPersonListActivity extends AppCompatActivity {
         recylerViewTrendingPersonList.setLayoutManager(linearLayoutManager);
         trendingPersonListAdpater = new TrendingPersonListAdpater(this,trendingPersonBeanList);
         recylerViewTrendingPersonList.setAdapter(trendingPersonListAdpater);
-
             recylerViewTrendingPersonList.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -111,7 +110,6 @@ public class TrendingPersonListActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -125,5 +123,4 @@ public class TrendingPersonListActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(request);
     }
-
 }

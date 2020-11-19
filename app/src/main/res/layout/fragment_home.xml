@@ -54,6 +54,7 @@
                 android:text="Trending">
 
             </TextView>
+
             <TextView
                 android:layout_alignParentBottom="true"
                 android:id="@+id/trending_person"
@@ -64,6 +65,7 @@
                 android:textColor="#807B7B">
 
             </TextView>
+
             <TextView
                 android:id="@+id/trending_personmore"
                 android:layout_width="wrap_content"
@@ -77,6 +79,7 @@
                 android:text="More">
 
             </TextView>
+
         </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -102,6 +105,7 @@
                 android:text="Trending">
 
             </TextView>
+
             <TextView
                 android:layout_alignParentBottom="true"
                 android:id="@+id/trending_tvshow"
@@ -112,6 +116,7 @@
                 android:textColor="#807B7B">
 
             </TextView>
+
             <TextView
                 android:id="@+id/trendingmoviemore"
                 android:layout_width="wrap_content"
@@ -134,9 +139,11 @@
             android:id="@+id/recycler_view_trending_movie">
 
         </androidx.recyclerview.widget.RecyclerView>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/trending_moviehd"
                 android:layout_width="wrap_content"
@@ -149,6 +156,7 @@
                 android:text="Trending">
 
             </TextView>
+
             <TextView
                 android:layout_alignParentBottom="true"
                 android:id="@+id/trending_movie"
@@ -157,8 +165,8 @@
                 android:text="Tv Show"
                 android:layout_toRightOf="@id/trending_moviehd"
                 android:textColor="#807B7B">
-
             </TextView>
+
             <TextView
                 android:id="@+id/trendingtvshowmore"
                 android:layout_width="wrap_content"
@@ -301,6 +309,7 @@
                 android:textColor="#807B7B">
 
             </TextView>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -363,6 +372,7 @@
         </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"

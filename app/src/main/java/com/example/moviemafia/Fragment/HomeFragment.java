@@ -27,8 +27,10 @@ import com.example.moviemafia.Activity.TrendingPersonListActivity;
 import com.example.moviemafia.Activity.TrendingShowListActivity;
 import com.example.moviemafia.Adapter.ImageSliderAdapter;
 import com.example.moviemafia.Adapter.MovieAndShowAdapter;
+import com.example.moviemafia.Adapter.PopularMovieAdapter;
 import com.example.moviemafia.Adapter.TrendingPersonAdapter;
 import com.example.moviemafia.Adapter.TrendingShowAdapter;
+import com.example.moviemafia.Bean.PopulerMovieBean;
 import com.example.moviemafia.Bean.TrendingMovieBean;
 import com.example.moviemafia.Bean.TrendingPersonBean;
 import com.example.moviemafia.Bean.TrendingPersonKnowForBean;
@@ -52,6 +54,7 @@ public class HomeFragment extends Fragment {
     List<TrendingPersonBean> trendingPersonList;
     List<TrendingMovieBean> trendingMovieBeanList;
     List<TrendingShowBean> trendingShowBeanList;
+    List<PopulerMovieBean> populerMovieBeanList;
     //request queue
     RequestQueue requestQueue;
 
@@ -59,13 +62,16 @@ public class HomeFragment extends Fragment {
     RecyclerView recycler_view_trending_person;
     RecyclerView recycler_view_trending_movie;
     RecyclerView recycler_view_trending_tvshow;
+    RecyclerView recycler_view_popular_movie;
     SliderView sliderView;
+
 
     //adapter
     TrendingPersonAdapter trendingPersonAdapter;
     MovieAndShowAdapter movieAndShowAdapter;
     TrendingShowAdapter trendingShowAdapter;
     ImageSliderAdapter imageSliderAdapter;
+    PopularMovieAdapter popularMovieAdapter;
     //textView
     TextView trending_personmore,trendingmoviemore,trendingtvshowmore;
 
@@ -87,35 +93,40 @@ public class HomeFragment extends Fragment {
         trendingPersonList = new ArrayList<>();
         trendingMovieBeanList = new ArrayList<>();
         trendingShowBeanList = new ArrayList<>();
+        populerMovieBeanList = new ArrayList<>();
 
         requestQueue = Volley.newRequestQueue(getContext());
 
         recycler_view_trending_person = view.findViewById(R.id.recycler_view_trending_person);
         recycler_view_trending_movie = view.findViewById(R.id.recycler_view_trending_movie);
         recycler_view_trending_tvshow = view.findViewById(R.id.recycler_view_trending_tvshow);
+        recycler_view_popular_movie = view.findViewById(R.id.recycler_view_popular_movie);
         sliderView = view.findViewById(R.id.imageSlider);
 
         recycler_view_trending_tvshow.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         recycler_view_trending_movie.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         recycler_view_trending_person.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recycler_view_popular_movie.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
 
         getTrendingPerson();
         getTrendingMovie();
         getTrendingShow();
+        getPopularMovie();
 
         trendingPersonAdapter = new TrendingPersonAdapter(getContext(),trendingPersonList);
         movieAndShowAdapter = new MovieAndShowAdapter(getContext(),trendingMovieBeanList);
         trendingShowAdapter = new TrendingShowAdapter(getContext(),trendingShowBeanList);
         imageSliderAdapter = new ImageSliderAdapter(getContext(),trendingMovieBeanList);
+        popularMovieAdapter = new PopularMovieAdapter(getContext(),populerMovieBeanList);
 
         recycler_view_trending_movie.setAdapter(movieAndShowAdapter);
         recycler_view_trending_person.setAdapter(trendingPersonAdapter);
         recycler_view_trending_tvshow.setAdapter(trendingShowAdapter);
+        recycler_view_popular_movie.setAdapter(popularMovieAdapter);
         sliderView.setSliderAdapter(imageSliderAdapter);
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
-        sliderView.setScrollTimeInSec(4); //
-        // set scroll delay in seconds :
+        sliderView.setScrollTimeInSec(4);
         sliderView.startAutoCycle();
 
         trending_personmore.setOnClickListener(new View.OnClickListener() {
@@ -142,6 +153,51 @@ public class HomeFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void getPopularMovie() {
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.popularMovie + 1, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray mainArray = jsonObject.getJSONArray("results");
+                    Log.d(TAG, "poplar mavie: "+mainArray);
+                    for(int i=0;i<mainArray.length();i++){
+                        JSONObject data = mainArray.getJSONObject(i);
+                        PopulerMovieBean populerMovieBean = new PopulerMovieBean();
+                        populerMovieBean.setPopularity(data.getString("popularity"));
+                        populerMovieBean.setVote_count(data.getString("vote_count"));
+                        populerMovieBean.setVideo(data.getString("video"));
+                        populerMovieBean.setPoster_path(data.getString("poster_path"));
+                        populerMovieBean.setId(data.getString("id"));
+                        populerMovieBean.setAdult(data.getString("adult"));
+                        populerMovieBean.setBackdrop_path(data.getString("backdrop_path"));
+                        populerMovieBean.setOriginal_language(data.getString("original_language"));
+                        populerMovieBean.setOriginal_title(data.getString("original_title"));
+                        populerMovieBean.setTitle(data.getString("title"));
+                        populerMovieBean.setVote_average(data.getString("vote_average"));
+                        populerMovieBean.setOverview(data.getString("overview"));
+                        populerMovieBean.setRelease_date(data.getString("release_date"));
+                        populerMovieBeanList.add(populerMovieBean);
+                    }
+                    popularMovieAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponseShow: "+error);
+            }
+        });
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(request);
+
     }
 
     private void getTrendingShow() {
